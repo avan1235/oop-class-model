@@ -1,35 +1,71 @@
 package pl.edu.mimuw;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class BankClient {
+public class BankClient
+{
 
-  // TODO:
-  // - create proper constructor
-  // - implement methods
-  // - add your own methods (1 is enough)
+	// TODO:
+	// - add your own methods (1 is enough)
 
-  public String getName() {
-    throw new IllegalStateException("TODO");
-  }
+	private final String name;
+	private final String surname;
+	private final int age;
+	private final String accountNumber;
+	private double money;
+	private final String currency;
+	private ArrayList <BankAction> actionHistory;
 
-  public String getSurname() {
-    throw new IllegalStateException("TODO");
-  }
+	public BankClient(String _name, String _surname, int _age, String _accountNumber, String _currency)
+	{
+		name = _name;
+		surname = _surname;
+		age = _age;
+		accountNumber = _accountNumber;
+		money = 0;
+		currency = _currency;
+		actionHistory = new ArrayList <BankAction>();
+	}
 
-  public int getAge() {
-    throw new IllegalStateException("TODO");
-  }
+	public String getName()
+	{
+		return name;
+	}
 
-  public String getAccountNumber() {
-    throw new IllegalStateException("TODO");
-  }
+	public String getSurname()
+	{
+		return surname;
+	}
 
-  public List<BankAction> getActionHistory() {
-    throw new IllegalStateException("TODO");
-  }
+	public int getAge()
+	{
+		return age;
+	}
 
-  public void addAction(BankAction action) {
-    throw new IllegalStateException("TODO");
-  }
+	public String getAccountNumber()
+	{
+		return accountNumber;
+	}
+
+	public double getMoney()
+	{
+		return money;
+	}
+
+	public String getCurrency()
+	{
+		return currency;
+	}
+
+	public List <BankAction> getActionHistory()
+	{
+		return actionHistory;
+	}
+
+	public void addAction(BankAction action)
+	{
+		actionHistory.add(action);
+		money += action.getTotalAmount();
+	}
 }

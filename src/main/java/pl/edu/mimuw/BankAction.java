@@ -2,20 +2,41 @@ package pl.edu.mimuw;
 
 import java.sql.Timestamp;
 
-public abstract class BankAction {
+public abstract class BankAction
+{
+	protected final double totalAmount;
+	protected final String currency;
+	protected final Timestamp startTimestamp;
+	protected final Timestamp endTimestamp;
 
-  public double totalAmount() {
-    throw new IllegalStateException("TODO");
-  }
+	public BankAction(double _totalAmount, String _currency, Timestamp _startTimestamp, Timestamp _endTimestamp)
+	{
+		totalAmount = _totalAmount;
+		currency = _currency;
+		startTimestamp = _startTimestamp;
+		endTimestamp = _endTimestamp;
+	}
 
-  public Timestamp getStartTimestamp() {
-    throw new IllegalStateException("TODO");
-  }
+	public double getTotalAmount()
+	{
+		return totalAmount;
+	}
 
-  public Timestamp getEndTimestamp() {
-    throw new IllegalStateException("TODO");
-  }
+	public String getCurrency()
+	{
+		return currency;
+	}
 
-  @Override
-  public abstract String toString();
+	public Timestamp getStartTimestamp()
+	{
+		return startTimestamp;
+	}
+
+	public Timestamp getEndTimestamp()
+	{
+		return endTimestamp;
+	}
+
+	@Override
+	public abstract String toString();
 }
