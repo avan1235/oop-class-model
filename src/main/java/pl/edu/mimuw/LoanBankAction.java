@@ -1,9 +1,22 @@
 package pl.edu.mimuw;
 
-public abstract class LoanBankAction extends BankAction {
+import java.sql.Timestamp;
 
-  // TODO:
-  // - remove abstract modifier from this class
-  // - this class has to contain extra fields other than DepositBankAction
-  // - you have to design it's constructors/accessors/setters and implement some from BankAction
+public class LoanBankAction extends BankAction {
+  private final int rate;
+
+  public LoanBankAction(int amount, Timestamp startTime, Timestamp endTime, int rate) {
+    super(amount, startTime, endTime);
+    this.rate = rate;
+  }
+
+  public int getRate() {
+    return rate;
+  }
+
+  @Override
+  public String toString() {
+    return "Action loan for: " + this.totalAmount() + " made at " + this.startTime + " ends at " + this.endTime +
+      ", rate: " + this.rate+"%";
+  }
 }

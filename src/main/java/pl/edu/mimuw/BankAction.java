@@ -3,17 +3,26 @@ package pl.edu.mimuw;
 import java.sql.Timestamp;
 
 public abstract class BankAction {
+  protected final int amount;
+  protected final Timestamp startTime;
+  protected final Timestamp endTime;
+
+  public BankAction(int amount, Timestamp startTime, Timestamp endTime) {
+    this.amount = amount;
+    this.startTime = startTime;
+    this.endTime = endTime;
+  }
 
   public double totalAmount() {
-    throw new IllegalStateException("TODO");
+    return amount;
   }
 
   public Timestamp getStartTimestamp() {
-    throw new IllegalStateException("TODO");
+    return this.startTime;
   }
 
   public Timestamp getEndTimestamp() {
-    throw new IllegalStateException("TODO");
+    return this.endTime;
   }
 
   @Override

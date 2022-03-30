@@ -1,20 +1,39 @@
 package pl.edu.mimuw;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Bank {
+  private final ArrayList<BankClient> clients;
+
+  public Bank() {
+    clients = new ArrayList<>();
+  }
 
   @Override
   public String toString() {
-    throw new IllegalStateException("TODO: get information about bank and all its clients (use StringBuilder)");
+    StringBuilder res = new StringBuilder("Bank with clients:\n");
+    for(var client : clients){
+      res.append(client.toString());
+      res.append(",\n");
+    }
+    return res.toString();
+  }
+
+  public String newAccountNumber(){
+    return "" + new Random().nextInt();
   }
 
   public List<BankClient> getAllClients() {
-    throw new IllegalStateException("TODO: remember not to return internal state list as it can be modified");
+    ArrayList<BankClient> res = new ArrayList<>();
+    for(var client : clients)
+      res.add(new BankClient(client));
+    return res;
   }
 
   public void addClient(BankClient client) {
-    throw new IllegalStateException("TODO");
+    this.clients.add(client);
   }
 
   public BankClient getClient(int clientIndex) {
