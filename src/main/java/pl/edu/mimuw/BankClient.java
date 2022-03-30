@@ -1,35 +1,65 @@
 package pl.edu.mimuw;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BankClient {
 
-  // TODO:
-  // - create proper constructor
-  // - implement methods
-  // - add your own methods (1 is enough)
+  private String name, surname;
+  private int age;
+  private String accountNumber;
+  private List<BankAction> actionHistory;
+
+  BankClient(String name, String surname, int age, String accountNumber) {
+    this.name = name;
+    this.surname = surname;
+    this.age = age;
+    this.accountNumber = accountNumber;
+    this.actionHistory = new ArrayList<>();
+  }
 
   public String getName() {
-    throw new IllegalStateException("TODO");
+    return name;
   }
 
   public String getSurname() {
-    throw new IllegalStateException("TODO");
+    return surname;
   }
 
   public int getAge() {
-    throw new IllegalStateException("TODO");
+    return age;
   }
 
   public String getAccountNumber() {
-    throw new IllegalStateException("TODO");
+    return accountNumber;
   }
 
   public List<BankAction> getActionHistory() {
-    throw new IllegalStateException("TODO");
+    return new ArrayList<>(actionHistory);
   }
 
   public void addAction(BankAction action) {
-    throw new IllegalStateException("TODO");
+    actionHistory.add(action);
+  }
+
+  public double getBalanceAtMoment(Timestamp moment) {
+    double balance = 0;
+    for (var action : actionHistory) {
+      if (moment.before(action.getStartTimestamp()) ||
+          moment.after(action.getEndTimestamp()))
+        continue;
+      balance += action.totalAmount();
+    }
+    return balance;
+  }
+
+  @Override
+  public String toString() {
+    var builder = new StringBuilder("BankClient " +
+        name + ", " + surname + ", " + age + ", " + accountNumber + "\n");
+    for (var action : actionHistory)
+      builder.append("  ").append(action.toString()).append("\n");
+    return builder.toString();
   }
 }
