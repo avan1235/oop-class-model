@@ -1,6 +1,10 @@
-# Template repository for Java 11 projects
+# MIM UW Bank Java Model
 
-With this template you can easily bootstrap your Java 11 project on GitHub.
+Create a model of Bank with its clients and play with it in `Main` class.
 
-You can start your project with single click on "Use this template" button above
-or just by clicking [here](https://github.com/avan1235/oop-java-template/generate).
+You need to satisfy all `TODO` fields in code that can be placed in exceptions (to be removed)
+or in some comments (also remove after implementing) - you can find all of them with `Ctrl+Alt+L`
+shortcut in Intellij.
+
+Probably it would be easier to start with `BankAction`, then work on `BankClient` and finally work on
+`Bank` and short example in `Main`
