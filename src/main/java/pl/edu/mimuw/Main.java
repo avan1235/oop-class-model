@@ -1,7 +1,7 @@
 package pl.edu.mimuw;
 
 import java.io.IOException;
-
+xd
 public class Main {
 
   public static void main(String[] args) throws IOException {
