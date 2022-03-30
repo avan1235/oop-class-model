@@ -11,7 +11,8 @@ public class Main {
     // TODO: play with bank:
     // - add new clients
     // - add different actions on clients accounts
-    //    * try to do it with some bigger collections of actions (maybe even use streams)
+    // * try to do it with some bigger collections of actions (maybe even use
+    // streams)
 
     System.out.println(bank);
   }
