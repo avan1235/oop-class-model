@@ -2,17 +2,21 @@ package pl.edu.mimuw;
 
 import java.io.IOException;
 
+import java.sql.Timestamp;
+
 public class Main {
-
-  public static void main(String[] args) throws IOException {
-    System.out.println("Welcome in MIM UW Bank");
-    final var bank = new Bank();
-
-    // TODO: play with bank:
-    // - add new clients
-    // - add different actions on clients accounts
-    //    * try to do it with some bigger collections of actions (maybe even use streams)
-
-    System.out.println(bank);
-  }
+	public static void main(String[] args) throws IOException {
+		System.out.println("Welcome in MIM UW Bank");
+		final var bank = new Bank();
+		
+		BankClient papiez = new BankClient("Karol", "Wojtyla", 101, "2137", 420);
+		bank.addClient(papiez);
+		papiez.withdraw(69);
+		papiez.birthday();
+		
+		BankClient student = new BankClient("Dominik", "Wawszczak", 20, "123456", 0);
+		student.addAction(new LoanBankAction(1024, Timestamp.valueOf("2022-03-31 21:37:00"), Timestamp.valueOf("2022-10-31 21:37:00"), 32));
+		
+		System.out.println(bank);
+	}
 }
