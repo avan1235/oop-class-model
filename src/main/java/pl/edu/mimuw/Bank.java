@@ -61,7 +61,7 @@ public class Bank {
   public double getMoneyDeposited() {
     double money = 0;
 
-    for (var client : this.clients) {
+    for (var client : this.getAllClients()) {
       money += client.getMoneyDeposited();
     }
 
@@ -74,7 +74,7 @@ public class Bank {
   public double getMoneyLoaned() {
     double money = 0;
 
-    for (var client : this.clients) {
+    for (var client : this.getAllClients()) {
       money += client.getMoneyLoaned();
     }
 
