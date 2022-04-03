@@ -10,7 +10,7 @@ public abstract class BankAction {
 
   protected final Timestamp end;
 
-  public BankAction(double amount, Timestamp start, Timestamp end) {
+  protected BankAction(double amount, Timestamp start, Timestamp end) {
     this.amount = amount;
     this.start = start;
     this.end = end;
@@ -34,7 +34,7 @@ public abstract class BankAction {
   /**
    * @return total number of months between start and end.
    */
-  public int getTotalMonths() {
+  protected int getTotalMonths() {
     final var start = this.getStartTimestamp().toLocalDateTime();
     final var end = this.getEndTimestamp().toLocalDateTime();
 
