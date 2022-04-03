@@ -1,12 +1,8 @@
 package pl.edu.mimuw;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 
 public class BankClient {
 
@@ -20,16 +16,29 @@ public class BankClient {
 
   private final List<BankAction> actionHistory;
 
-  public BankClient(String name, String surname, int age, String accountNumber, List<BankAction> actionHistory) {
+  // I've decided to add similar fields here as in the Bank class to reduce number of counting these fields.
+  private double moneyDeposited;
+
+  private double moneyLoaned;
+
+  public BankClient(String name, String surname, int age, String accountNumber, List<BankAction> actionHistory,
+                    double moneyDeposited, double moneyLoaned) {
     this.name = name;
     this.surname = surname;
     this.age = age;
     this.accountNumber = accountNumber;
     this.actionHistory = new ArrayList<>(actionHistory);
+    this.moneyDeposited = moneyDeposited;
+    this.moneyLoaned = moneyLoaned;
+  }
+
+  public BankClient(String name, String surname, int age, String accountNumber, List<BankAction> actionHistory) {
+    this(name, surname, age, accountNumber, actionHistory, 0, 0);
   }
 
   public BankClient(BankClient other) {
-    this(other.name, other.surname, other.age, other.accountNumber, other.actionHistory);
+    this(other.name, other.surname, other.age, other.accountNumber, other.actionHistory, other.moneyDeposited,
+      other.moneyLoaned);
   }
 
   public BankClient(String name, String surname, int age, String accountNumber) {
@@ -53,74 +62,43 @@ public class BankClient {
   }
 
   public List<BankAction> getActionHistory() {
-    return this.actionHistory;
+    return new ArrayList<BankAction>(this.actionHistory);
+  }
+
+  /**
+   * @return total amount of money deposited by the client.
+   */
+  public double getMoneyDeposited() {
+    return this.moneyDeposited;
+  }
+
+  /**
+   * @return total amount of money loaned by the client.
+   */
+  public double getMoneyLoaned() {
+    return this.moneyLoaned;
+  }
+
+  /**
+   * Adds money to the total value of money deposited by the client.
+   *
+   * @param money amount of money to be added.
+   */
+  public void addMoneyDeposited(double money) {
+    this.moneyDeposited += money;
+  }
+
+  /**
+   * Adds money to the total value of money loaned by the client.
+   *
+   * @param money amount of money to be added.
+   */
+  public void addMoneyLoaned(double money) {
+    this.moneyLoaned += money;
   }
 
   public void addAction(BankAction action) {
     this.actionHistory.add(action);
-  }
-
-  /**
-   * This method adds a couple of random actions to given client's action history.
-   */
-  public void addRandomActions() {
-    final var numberOfActions = new Random().nextInt(7) + 1;
-
-    for (int i = 0; i < numberOfActions; i++) {
-      final var action = new Random().nextBoolean();
-      final var amount = new Random().nextDouble() * 10000;
-      final var startYear = new Random().nextInt(10) + 2010;
-      final var startMonth = new Random().nextInt(12) + 1;
-      final var startDay = new Random().nextInt(28) + 1;
-      var endYear = startYear + new Random().nextInt(10);
-      final var endMonth = (startMonth + new Random().nextInt(12)) % 12 + 1;
-      if (endMonth <= startMonth && endYear == startYear) {
-        endYear++;
-      }
-      final var endDay = (startDay + new Random().nextInt(28)) % 28 + 1;
-      final var startDate = Timestamp.valueOf(LocalDateTime.of(startYear, Month.of(startMonth), startDay,
-        0, 0, 0));
-      final var endDate = Timestamp.valueOf(LocalDateTime.of(endYear, Month.of(endMonth), endDay,
-        0, 0, 0));
-
-      if (action) {
-        final var percent = new Random().nextInt(5) + 1;
-        this.addAction(new DepositBankAction(amount, startDate, endDate, percent));
-      } else {
-        final var rate = new Random().nextInt(10) + 5;
-        this.addAction(new LoanBankAction(amount, startDate, endDate, rate));
-      }
-    }
-  }
-
-  /**
-   * @return the sum of all deposits for given client.
-   */
-  public double getMoneyDeposited() {
-    double result = 0;
-
-    for (var action : this.actionHistory) {
-      if (action instanceof DepositBankAction) {
-        result += action.getAmount();
-      }
-    }
-
-    return result;
-  }
-
-  /**
-   * @return the sum of all loans for given client.
-   */
-  public double getMoneyLoaned() {
-    double result = 0;
-
-    for (var action : this.actionHistory) {
-      if (action instanceof LoanBankAction) {
-        result += action.getAmount();
-      }
-    }
-
-    return result;
   }
 
   /**
@@ -133,8 +111,7 @@ public class BankClient {
     sb.append("Client: ").append(this.name).append(" ").append(this.surname).append(", age: ").append(this.age)
       .append(", account number: ").append(this.accountNumber).append("\n").append("\tAccount history:\n");
 
-    final var actionsList = new ArrayList<BankAction>(this.actionHistory);
-    actionsList.stream()
+    this.getActionHistory().stream()
       .sorted(Comparator.comparing(BankAction::getStartTimestamp))
       .forEach(action -> sb.append("\t\t").append(action).append("\n"));
 

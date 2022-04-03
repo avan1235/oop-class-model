@@ -8,10 +8,19 @@ import java.util.ArrayList;
 
 public class Bank {
 
+  private final String bankName;
+
   private final List<BankClient> clients;
 
-  public Bank() {
+  private double totalMoneyDeposited;
+
+  private double totalMoneyLoaned;
+
+  public Bank(String bankName) {
+    this.bankName = bankName;
     this.clients = new ArrayList<BankClient>();
+    this.totalMoneyDeposited = 0;
+    this.totalMoneyLoaned = 0;
   }
 
   /**
@@ -25,12 +34,12 @@ public class Bank {
     final var moneyLoaned = new BigDecimal(String.valueOf(this.getMoneyLoaned()))
       .setScale(2, RoundingMode.HALF_UP);
 
-    sb.append("Number of clients in the bank: ").append(this.getNumberOfClients()).append("\n");
-    sb.append("Money deposited in the bank: ").append(moneyDeposited).append("\n");
-    sb.append("Money loaned from the bank: ").append(moneyLoaned).append("\n\n");
+    sb.append("Welcome in ").append(this.bankName).append("\n")
+      .append("Number of clients in the bank: ").append(this.getNumberOfClients()).append("\n")
+      .append("Money deposited in the bank: ").append(moneyDeposited).append("\n")
+      .append("Money loaned from the bank: ").append(moneyLoaned).append("\n\n");
 
-    final var clientsList = this.getAllClients();
-    clientsList.stream()
+    this.getAllClients().stream()
       .sorted(Comparator.comparing(BankClient::getAccountNumber))
       .forEach(sb::append);
 
@@ -40,15 +49,15 @@ public class Bank {
   public List<BankClient> getAllClients() {
     final var clients = new ArrayList<BankClient>();
 
-    for (var client : this.clients) {
-      clients.add(new BankClient(client));
-    }
+    this.clients.stream().map(BankClient::new).forEach(clients::add);
 
     return clients;
   }
 
   public void addClient(BankClient client) {
     this.clients.add(client);
+    this.addMoneyDeposited(client.getMoneyDeposited());
+    this.addMoneyLoaned(client.getMoneyLoaned());
   }
 
   public int getNumberOfClients() {
@@ -59,26 +68,32 @@ public class Bank {
    * @return sum of all money deposited in the bank.
    */
   public double getMoneyDeposited() {
-    double money = 0;
-
-    for (var client : this.getAllClients()) {
-      money += client.getMoneyDeposited();
-    }
-
-    return money;
+    return this.totalMoneyDeposited;
   }
 
   /**
    * @return sum of all money loaned from the bank.
    */
   public double getMoneyLoaned() {
-    double money = 0;
+    return this.totalMoneyLoaned;
+  }
 
-    for (var client : this.getAllClients()) {
-      money += client.getMoneyLoaned();
-    }
+  /**
+   * Adds a given amount of money to the total money deposited in the bank.
+   *
+   * @param money amount of money to be deposited.
+   */
+  public void addMoneyDeposited(double money) {
+    this.totalMoneyDeposited += money;
+  }
 
-    return money;
+  /**
+   * Adds a given amount of money to the total money loaned from the bank.
+   *
+   * @param money amount of money to be loaned.
+   */
+  public void addMoneyLoaned(double money) {
+    this.totalMoneyLoaned += money;
   }
 
   public BankClient getClient(int clientIndex) {

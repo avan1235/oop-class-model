@@ -1,15 +1,17 @@
 package pl.edu.mimuw;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Random;
 
 public class Main {
 
   public static void main(String[] args) throws IOException {
-    System.out.println("Welcome in MIM UW Bank");
-    final var bank = new Bank();
+    final var bank = new Bank("MIM UW Bank");
 
     // If we want to add a new client, all we need to do is add his name, surname, age and account number to this array.
     final BankClient[] clients = {
@@ -19,20 +21,53 @@ public class Main {
       new BankClient("Adam", "Malysz", 44, "323450702030")
     };
 
-    final var clientsList = Arrays.asList(clients);
-
-    clientsList.stream().forEach(bank::addClient);
-    clientsList.stream().forEach(BankClient::addRandomActions);
+    Arrays.stream(clients).forEach(bank::addClient);
+    Arrays.stream(clients).forEach(client -> addRandomActions(client, bank));
 
     System.out.println(bank);
 
     // This part was added to play with streams
-    final var clientMostDeposited = clientsList.stream().max(Comparator.comparing(BankClient::getMoneyDeposited));
-    clientMostDeposited.ifPresent(bankClient -> System.out.println("Client with the most money deposited: "
-      + bankClient.getName() + " " + bankClient.getSurname()));
+    Arrays.stream(clients).max(Comparator.comparing(BankClient::getMoneyDeposited)).ifPresent(bankClient ->
+      System.out.println("Client with the most money deposited: " + bankClient.getName() + " " + bankClient.getSurname()));
 
-    final var clientMostLoaned = clientsList.stream().max(Comparator.comparing(BankClient::getMoneyLoaned));
-    clientMostLoaned.ifPresent(bankClient -> System.out.println("Client with the most money loaned: "
-      + bankClient.getName() + " " + bankClient.getSurname()));
+    Arrays.stream(clients).max(Comparator.comparing(BankClient::getMoneyLoaned)).ifPresent(bankClient ->
+      System.out.println("Client with the most money loaned: " + bankClient.getName() + " " + bankClient.getSurname()));
+  }
+
+  /**
+   * This method adds a couple of random actions to given client's action history.
+   */
+  private static void addRandomActions(BankClient client, Bank bank) {
+    final var numberOfActions = new Random().nextInt(7) + 1;
+
+    for (int i = 0; i < numberOfActions; i++) {
+      final var action = new Random().nextBoolean();
+      final var amount = new Random().nextDouble() * 10000;
+      final var startYear = new Random().nextInt(10) + 2010;
+      final var startMonth = new Random().nextInt(12) + 1;
+      final var startDay = new Random().nextInt(28) + 1;
+      var endYear = startYear + new Random().nextInt(10);
+      final var endMonth = (startMonth + new Random().nextInt(12)) % 12 + 1;
+      if (endMonth <= startMonth && endYear == startYear) {
+        endYear++;
+      }
+      final var endDay = (startDay + new Random().nextInt(28)) % 28 + 1;
+      final var startDate = Timestamp.valueOf(LocalDateTime.of(startYear, Month.of(startMonth), startDay,
+        0, 0, 0));
+      final var endDate = Timestamp.valueOf(LocalDateTime.of(endYear, Month.of(endMonth), endDay,
+        0, 0, 0));
+
+      if (action) {
+        final var percent = new Random().nextInt(5) + 1;
+        client.addAction(new DepositBankAction(amount, startDate, endDate, percent));
+        client.addMoneyDeposited(amount);
+        bank.addMoneyDeposited(amount);
+      } else {
+        final var rate = new Random().nextInt(10) + 5;
+        client.addAction(new LoanBankAction(amount, startDate, endDate, rate));
+        client.addMoneyLoaned(amount);
+        bank.addMoneyLoaned(amount);
+      }
+    }
   }
 }
