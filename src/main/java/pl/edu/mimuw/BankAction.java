@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 
 public abstract class BankAction {
-  protected final double amount;
+  protected double amount;
   protected final Timestamp startTimestamp;
   protected final Timestamp endTimestamp;
 
@@ -13,10 +13,19 @@ public abstract class BankAction {
     this.startTimestamp = Timestamp.from(Instant.now());
     this.endTimestamp = endTimestamp;
   }
-
-  public double totalAmount() {
-    return amount;
+  /**
+   * druga metoda, uzywana przy kopiowaniu - bo nie chcemy, by zmienialo nam startTimestamp na obecny czas
+   */
+  protected BankAction(double amount, Timestamp startTimestamp, Timestamp endTimestamp) {
+    this.amount = amount;
+    this.startTimestamp = startTimestamp;
+    this.endTimestamp = endTimestamp;
   }
+  
+  /**
+   * @return kopia tego BankAction
+   */
+  abstract public BankAction createCopy();
 
   @Override
   public String toString() {
@@ -27,6 +36,10 @@ public abstract class BankAction {
     sb.append(" ");
     sb.append(endTimestamp);
     return sb.toString();
+  }
+  
+  public double getAmount() {
+    return amount;
   }
 
   public Timestamp getStartTimestamp() {
