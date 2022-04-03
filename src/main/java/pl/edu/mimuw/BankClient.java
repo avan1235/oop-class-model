@@ -1,35 +1,67 @@
 package pl.edu.mimuw;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BankClient {
+  private final String name;
+  private final String surname;
+  private final int age;
+  private final String accountNumber;
+  private double availableFunds;
+  private final List<BankAction> actionHistory;
 
-  // TODO:
-  // - create proper constructor
-  // - implement methods
-  // - add your own methods (1 is enough)
+  public BankClient(String name, String surname, int age, String accountNumber) {
+    this.name = name;
+    this.surname = surname;
+    this.age = age;
+    this.accountNumber = accountNumber;
+    this.availableFunds = 0;
+    this.actionHistory = new ArrayList<>();
+  }
 
   public String getName() {
-    throw new IllegalStateException("TODO");
+    return this.name;
   }
 
   public String getSurname() {
-    throw new IllegalStateException("TODO");
+    return this.surname;
   }
 
   public int getAge() {
-    throw new IllegalStateException("TODO");
+    return this.age;
   }
 
   public String getAccountNumber() {
-    throw new IllegalStateException("TODO");
+    return this.accountNumber;
+  }
+
+  public double getAvailableFunds() {
+    return this.availableFunds;
   }
 
   public List<BankAction> getActionHistory() {
-    throw new IllegalStateException("TODO");
+    return this.actionHistory;
+  }
+
+  public void updateFunds(Double amount) {
+    this.availableFunds += amount;
   }
 
   public void addAction(BankAction action) {
-    throw new IllegalStateException("TODO");
+    this.actionHistory.add(action);
+  }
+
+  public String toString() {
+    final StringBuilder stringBuilder = new StringBuilder("");
+    stringBuilder.append("name: ").append(this.name);
+    stringBuilder.append(" \nsurname: ").append(this.surname);
+    stringBuilder.append(", \nage: ").append(this.age);
+    stringBuilder.append(", \naccountNumber: ").append(this.accountNumber);
+    stringBuilder.append(", \navailableFunds: ").append(this.availableFunds);
+    stringBuilder.append(", \nactionHistory: ").append(this.actionHistory);
+    stringBuilder.append("}");
+
+    return stringBuilder.toString();
   }
 }
