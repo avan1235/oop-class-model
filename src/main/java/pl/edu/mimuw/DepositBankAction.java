@@ -1,9 +1,22 @@
 package pl.edu.mimuw;
 
-public abstract class DepositBankAction extends BankAction {
+import java.sql.Timestamp;
 
-  // TODO:
-  // - remove abstract modifier from this class
-  // - this class has to contain extra fields other than LoanBankAction
-  // - you have to design it's constructors/accessors/setters and implement some from BankAction
+public class DepositBankAction extends BankAction {
+
+  private String acceptingBranch;
+
+  DepositBankAction(double amount, Timestamp start, Timestamp end, String acceptingBranch) {
+    super(amount, start, end);
+    this.acceptingBranch = acceptingBranch;
+  }
+
+  public String getAcceptingBranch() {
+    return acceptingBranch;
+  }
+
+  @Override
+  public String toString() {
+    return "DepositBankAction " + amount + ", " + start + ", " + end + ", " + acceptingBranch;
+  }
 }
