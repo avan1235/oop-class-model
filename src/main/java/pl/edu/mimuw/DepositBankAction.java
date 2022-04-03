@@ -3,20 +3,29 @@ package pl.edu.mimuw;
 import java.sql.Timestamp;
 
 public class DepositBankAction extends BankAction {
-  public DepositBankAction(double amount, Timestamp startTimestamp, Timestamp endTimestamp) {
+  final private double intrestRate;
+
+  public DepositBankAction(double amount, double intrestRate, Timestamp startTimestamp, Timestamp endTimestamp) {
     super(amount, startTimestamp, endTimestamp);
+    this.intrestRate = intrestRate;
   }
 
-  // TODO:
-  // - remove abstract modifier from this class
-  // - this class has to contain extra fields other than LoanBankAction
-  // - you have to design it's constructors/accessors/setters and implement some from BankAction
+  public double getIntrestRate() {
+    return this.intrestRate;
+  }
+
+  public void extendDeposit(Timestamp endTimestamp) {
+    if (this.endTimestamp.before(endTimestamp)) {
+      this.endTimestamp = endTimestamp;
+    }
+  }
 
   @Override
   public String toString() {
     final StringBuilder stringBuilder = new StringBuilder("DepositBankAction {");
-    stringBuilder.append(", \n"+this.generalInfo());
-    stringBuilder.append("\n}");
+    stringBuilder.append(" \nintrest rate: ").append(this.intrestRate);
+    stringBuilder.append(", \n" + this.generalInfo());
+    stringBuilder.append("}");
 
     return stringBuilder.toString();
   }

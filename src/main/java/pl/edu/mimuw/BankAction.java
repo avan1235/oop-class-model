@@ -3,9 +3,9 @@ package pl.edu.mimuw;
 import java.sql.Timestamp;
 
 public abstract class BankAction {
-  protected final double amount;
+  protected double amount;
   protected final Timestamp startTimestamp;
-  protected final Timestamp endTimestamp;
+  protected Timestamp endTimestamp;
 
   protected BankAction(double amount, Timestamp startTimestamp, Timestamp endTimestamp) {
     this.amount = amount;
@@ -13,26 +13,28 @@ public abstract class BankAction {
     this.endTimestamp = endTimestamp;
   }
 
-  public double totalAmount(){
-    return this.totalAmount();
-  };
+  public double totalAmount() {
+    return this.amount;
+  }
 
-  public Timestamp getStartTimestamp(){
+  public Timestamp getStartTimestamp() {
     return this.startTimestamp;
   }
-  public Timestamp getEndTimestamp(){
+
+  public Timestamp getEndTimestamp() {
     return this.endTimestamp;
   }
 
-  protected String generalInfo(){
+  protected String generalInfo() {
     final StringBuilder stringBuilder = new StringBuilder("Duration {");
-    stringBuilder.append(" \nbegan: ").append(this.startTimestamp);
-    stringBuilder.append(", \nend: ").append(this.endTimestamp);
-    stringBuilder.append("\n}");
     stringBuilder.append("\ntotal amount: ").append(this.amount);
+    stringBuilder.append(" \nbegan: ").append(this.startTimestamp.toString());
+    stringBuilder.append(", \nend: ").append(this.endTimestamp.toString());
+    stringBuilder.append("}");
 
     return stringBuilder.toString();
   }
+
   @Override
   public abstract String toString();
 }

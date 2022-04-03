@@ -17,13 +17,8 @@ public class BankClient {
     this.age = age;
     this.accountNumber = accountNumber;
     this.availableFunds = 0;
-    this.actionHistory = new ArrayList<BankAction>();
+    this.actionHistory = new ArrayList<>();
   }
-
-  // TODO:
-  // - create proper constructor
-  // - implement methods
-  // - add your own methods (1 is enough)
 
   public String getName() {
     return this.name;
@@ -49,11 +44,24 @@ public class BankClient {
     return this.actionHistory;
   }
 
-  public void updateFunds(Double amount){
+  public void updateFunds(Double amount) {
     this.availableFunds += amount;
   }
 
   public void addAction(BankAction action) {
     this.actionHistory.add(action);
+  }
+
+  public String toString() {
+    final StringBuilder stringBuilder = new StringBuilder("");
+    stringBuilder.append("name: ").append(this.name);
+    stringBuilder.append(" \nsurname: ").append(this.surname);
+    stringBuilder.append(", \nage: ").append(this.age);
+    stringBuilder.append(", \naccountNumber: ").append(this.accountNumber);
+    stringBuilder.append(", \navailableFunds: ").append(this.availableFunds);
+    stringBuilder.append(", \nactionHistory: ").append(this.actionHistory);
+    stringBuilder.append("}");
+
+    return stringBuilder.toString();
   }
 }
