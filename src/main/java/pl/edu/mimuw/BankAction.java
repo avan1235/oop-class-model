@@ -32,11 +32,11 @@ public abstract class BankAction {
     }
 
     public Timestamp getStartDate() {
-        return this.startDate;
+        return (Timestamp) this.startDate.clone();
     }
 
     public Timestamp getEndDate() {
-        return this.endDate;
+        return (Timestamp) this.endDate.clone();
     }
 
     @Override
