@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public abstract class BankAction
 {
-	protected final double totalAmount;
+	protected double totalAmount;
 	protected final String currency;
 	protected final Timestamp startTimestamp;
 	protected final Timestamp endTimestamp;
