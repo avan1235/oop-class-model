@@ -4,8 +4,8 @@ import java.sql.Timestamp;
 
 public class LoanBankAction extends BankAction
 {
-  private int interestInterval;
-  private double pledge;
+  private final int interestInterval;
+  private final double pledge;
 
   public LoanBankAction(double totalAmount, Timestamp startTimestamp, Timestamp endTimestamp, int interestInterval, double pledge)
   {
@@ -28,10 +28,6 @@ public class LoanBankAction extends BankAction
 
   public String toString()
   {
-    return this.interestInterval + " " + this.pledge;
+    return "Loan " + this.interestInterval + " " + this.pledge;
   }
-  // TODO:
-  // - remove abstract modifier from this class
-  // - this class has to contain extra fields other than DepositBankAction
-  // - you have to design it's constructors/accessors/setters and implement some from BankAction
 }

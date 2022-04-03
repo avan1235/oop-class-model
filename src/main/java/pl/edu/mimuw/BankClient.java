@@ -10,10 +10,6 @@ public class BankClient {
   private String accountNumber;
   private double money;
   private List<BankAction> bankActions;
-  // TODO:
-  // - create proper constructor
-  // - implement methods
-  // - add your own methods (1 is enough)
 
   public BankClient(String name, String surname, int age, String accountNumber, double money, List<BankAction> bankActions)
   {
@@ -52,10 +48,14 @@ public class BankClient {
 
   public List<BankAction> getActionHistory()
   {
-    //List<BankClient> b = new ArrayList<>();
-    //for(i : )
+    List<BankAction> b = new ArrayList<>();
 
-    return bankActions;
+    for(BankAction a : bankActions)
+    {
+      b.add(a);
+    }
+
+    return b;
   }
 
   public void addAction(BankAction action)
@@ -76,6 +76,7 @@ public class BankClient {
     }
     else
     {
+      System.out.println("Successfully withdrawed money!\n");
       this.money -= m;
     }
   }

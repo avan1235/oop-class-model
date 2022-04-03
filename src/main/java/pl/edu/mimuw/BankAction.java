@@ -10,7 +10,6 @@ public abstract class BankAction {
   public double totalAmount()
   {
     return this.totalAmount;
-    //throw new IllegalStateException("TODO");
   }
 
   public Timestamp getStartTimestamp()

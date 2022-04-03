@@ -27,11 +27,6 @@ public class DepositBankAction extends BankAction
 
   public String toString()
   {
-    return this.percentage + " " + this.breakDeclaration;
+    return "Deposit " + this.percentage + "% " + this.breakDeclaration;
   }
-
-  // TODO:
-  // - remove abstract modifier from this class
-  // - this class has to contain extra fields other than LoanBankAction
-  // - you have to design it's constructors/accessors/setters and implement some from BankAction
 }
