@@ -1,24 +1,46 @@
 package pl.edu.mimuw;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Bank {
+  private final List<BankClient> clientList;
+
+  public Bank() {
+    this.clientList = new ArrayList<>();
+  }
 
   @Override
   public String toString() {
-    throw new IllegalStateException("TODO: get information about bank and all its clients (use StringBuilder)");
+    var sb = new StringBuilder();
+
+    for (BankClient bc : this.clientList) {
+      sb.append(bc.toString());
+    }
+
+    return sb.toString();
   }
 
   public List<BankClient> getAllClients() {
-    throw new IllegalStateException("TODO: remember not to return internal state list as it can be modified");
+    List<BankClient> l = new ArrayList<>();
+
+    for (BankClient bc : this.clientList) {
+      l.add(bc.getCopy());
+    }
+
+    return l;
+  }
+
+  public int getNumberOfClients() {
+    return this.clientList.size();
   }
 
   public void addClient(BankClient client) {
-    throw new IllegalStateException("TODO");
+    this.clientList.add(client);
   }
 
   public BankClient getClient(int clientIndex) {
-    final var clients = getAllClients();
+    final var clients = this.clientList;
     if (clientIndex >= clients.size()) throw new IllegalArgumentException("Invalid client index");
     return clients.get(clientIndex);
   }
