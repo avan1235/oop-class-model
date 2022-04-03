@@ -71,7 +71,7 @@ public class Bank {
     }
 
     public ArrayList<BankClient> getAllClients() {
-        return (ArrayList<BankClient>) allClients.clone();
+        return new ArrayList<BankClient>(allClients);
     }
 
     public BankClient openClientAccount(String name, String surname, int age,
