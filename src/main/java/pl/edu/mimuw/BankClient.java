@@ -1,35 +1,45 @@
 package pl.edu.mimuw;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BankClient {
+  
+  private final String name;
+  private final String surname;
+  private final int age;
+  private final String accountNumber;
+  private final List<BankAction> actionHistory;
 
-  // TODO:
-  // - create proper constructor
-  // - implement methods
-  // - add your own methods (1 is enough)
-
+  public BankClient(String name, String surname, int age, String accountNumber) {
+    this.name = name;
+    this.surname = surname;
+    this.age = age;
+    this.accountNumber = accountNumber;
+    this.actionHistory = new ArrayList<>();
+  }
+  
   public String getName() {
-    throw new IllegalStateException("TODO");
+    return name;
   }
 
   public String getSurname() {
-    throw new IllegalStateException("TODO");
+    return surname;
   }
 
   public int getAge() {
-    throw new IllegalStateException("TODO");
+    return age;
   }
 
   public String getAccountNumber() {
-    throw new IllegalStateException("TODO");
+    return accountNumber;
   }
 
   public List<BankAction> getActionHistory() {
-    throw new IllegalStateException("TODO");
+    return actionHistory;
   }
 
   public void addAction(BankAction action) {
-    throw new IllegalStateException("TODO");
+    actionHistory.add(action);
   }
 }
