@@ -1,18 +1,22 @@
 package pl.edu.mimuw;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.time.Instant;
 
 public class Main {
 
   public static void main(String[] args) throws IOException {
     System.out.println("Welcome in MIM UW Bank");
-    final var bank = new Bank();
+    final Bank bank = new Bank("MIM UW");
 
-    // TODO: play with bank:
-    // - add new clients
-    // - add different actions on clients accounts
-    //    * try to do it with some bigger collections of actions (maybe even use streams)
-
+    BankClient client = new BankClient("Grzegorz", "Brzęczyszczykiewicz", 19, "12345");
+    DepositBankAction deposit = new DepositBankAction(70.0, Timestamp.from(Instant.now()), Timestamp.from(Instant.now()), 0.17, 100.0);
+    client.addAction(deposit);
+    System.out.println(client.getName());
+    bank.addClient(client);
     System.out.println(bank);
   }
 }
