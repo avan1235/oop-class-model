@@ -1,9 +1,31 @@
 package pl.edu.mimuw;
 
-public abstract class DepositBankAction extends BankAction {
+import java.sql.Timestamp;
 
-  // TODO:
-  // - remove abstract modifier from this class
-  // - this class has to contain extra fields other than LoanBankAction
-  // - you have to design it's constructors/accessors/setters and implement some from BankAction
+public class DepositBankAction extends BankAction {
+  boolean isBiggerThanMillion;
+
+  public DepositBankAction(double amount, Timestamp begin, Timestamp end) {
+    super(amount, begin, end);
+    if (amount > 1000000) {
+      this.isBiggerThanMillion = true;
+    } else {
+      this.isBiggerThanMillion = false;
+    }
+  }
+
+  public double getValofDeposit() {
+    return this.amount;
+  }
+
+  @Override
+  public String toString() {
+    var sb = new StringBuilder();
+    if (isBiggerThanMillion) {
+      sb.append("Deposit is bigger than million ");
+    } else {
+      sb.append("Deposit is smaller than million ");
+    }
+    return sb.toString();
+  }
 }
