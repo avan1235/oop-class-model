@@ -29,7 +29,7 @@ public class Bank
 				.append("Bank country: ").append(getBankCountry()).append('\n')
 				.append("Bank city: ").append(getBankCity()).append('\n')
 				.append("Bank SWIFT code: ").append(getSwiftCode()).append('\n')
-				.append("Number of bank's clients: ").append(getAllClients().size()).append('\n')
+				.append("Number of bank's clients: ").append(getAllClients().size()).append("\n\n")
 				.append("Clients' personal data:\n");
 		for (var client : getAllClients())
 			s.append(client.getName()).append(' ').append(client.getSurname())

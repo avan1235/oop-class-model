@@ -5,10 +5,6 @@ import java.util.List;
 
 public class BankClient
 {
-
-	// TODO:
-	// - add your own methods (1 is enough)
-
 	private final String name;
 	private final String surname;
 	private final int age;
@@ -63,9 +59,15 @@ public class BankClient
 		return actionHistory;
 	}
 
-	public void addAction(BankAction action)
+	public BankClient addAction(BankAction action)
 	{
 		actionHistory.add(action);
 		money += action.getTotalAmount();
+		return this;
+	}
+
+	public void confiscateAssets()
+	{
+		money = 0;
 	}
 }
