@@ -24,11 +24,11 @@ public class Main {
     System.out.println(bank);
 
     var rand = ThreadLocalRandom.current();
-    for (var i = 0; i < 100; ++i) {
+    for (var i = 0; i < 10; ++i) {
       var client_i = new BankClient("Tomasz", "Nr" + i, i + 18, String.valueOf(i + 100000));
       bank.addClient(client_i);
 
-      var n_actions = rand.nextInt(1, 20);
+      var n_actions = (i == 0 ? 20 : rand.nextInt(1, 10));
       for (var j = 0; j < n_actions; ++j) {
         if (rand.nextBoolean()) {
           client_i.addAction(new LoanBankAction(rand.nextInt(1, 2000), new Timestamp(rand.nextInt(1000, 5000)),
@@ -40,5 +40,10 @@ public class Main {
       }
     }
     System.out.println(bank);
+
+    for(var i = 100; i < 10000; i += 400) {
+      var t = new Timestamp(i);
+      System.out.println(t.toString() + ": " + bank.getAllClients().get(1).getBalanceAtMoment(t));
+    }
   }
 }

@@ -3,6 +3,7 @@ package pl.edu.mimuw;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BankClient {
 
@@ -31,8 +32,16 @@ public class BankClient {
     return age;
   }
 
+  public void setAge(int age) {
+    this.age = age;
+  }
+
   public String getAccountNumber() {
     return accountNumber;
+  }
+
+  public void setAccountNumber(String accountNumber) {
+    this.accountNumber = accountNumber;
   }
 
   public List<BankAction> getActionHistory() {
@@ -44,14 +53,11 @@ public class BankClient {
   }
 
   public double getBalanceAtMoment(Timestamp moment) {
-    double balance = 0;
-    for (var action : actionHistory) {
-      if (moment.before(action.getStartTimestamp()) ||
-          moment.after(action.getEndTimestamp()))
-        continue;
-      balance += action.totalAmount();
-    }
-    return balance;
+    return actionHistory.stream()
+        .filter(action -> !(moment.before(action.getStartTimestamp()) ||
+            moment.after(action.getEndTimestamp())))
+        .map(action -> action.totalAmount())
+        .collect(Collectors.summingDouble(Double::valueOf));
   }
 
   @Override
